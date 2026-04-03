@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
-/* CE1007/CZ1007 Data Structures
-Lab Test: Section A - Linked List Questions
-Purpose: Implementing the required functions for Question 3 */
+/* CE1007/CZ1007 자료구조
+랩 테스트: 섹션 A - 연결 리스트 문제
+목적: 문제 3에 필요한 함수를 구현하기 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -11,205 +11,217 @@ Purpose: Implementing the required functions for Question 3 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
-typedef struct _listnode
-{
-	int item;
-	struct _listnode *next;
-} ListNode;			// You should not change the definition of ListNode
+typedef struct _listnode {
+  int item;
+  struct _listnode* next;
+} ListNode;  // ListNode의 정의는 변경하면 안 됩니다
 
-typedef struct _linkedlist
-{
-	int size;
-	ListNode *head;
-} LinkedList;			// You should not change the definition of LinkedList
+typedef struct _linkedlist {
+  int size;
+  ListNode* head;
+} LinkedList;  // LinkedList의 정의는 변경하면 안 됩니다
 
+//////////////////////// 함수 원형 /////////////////////////////////////
 
-//////////////////////// function prototypes /////////////////////////////////////
+// 이 함수의 원형은 변경하면 안 됩니다
+void moveOddItemsToBack(LinkedList* ll);
 
-// You should not change the prototype of this function
-void moveOddItemsToBack(LinkedList *ll);
+void printList(LinkedList* ll);
+void removeAllItems(LinkedList* ll);
+ListNode* findNode(LinkedList* ll, int index);
+int insertNode(LinkedList* ll, int index, int value);
+int removeNode(LinkedList* ll, int index);
 
-void printList(LinkedList *ll);
-void removeAllItems(LinkedList *ll);
-ListNode * findNode(LinkedList *ll, int index);
-int insertNode(LinkedList *ll, int index, int value);
-int removeNode(LinkedList *ll, int index);
+//////////////////////////// main()
+/////////////////////////////////////////////////
 
-//////////////////////////// main() //////////////////////////////////////////////
+int main() {
+  LinkedList ll;
+  int c, i, j;
+  c = 1;
+  // 연결 리스트 1을 빈 연결 리스트로 초기화
+  ll.head = NULL;
+  ll.size = 0;
 
-int main()
-{
-	LinkedList ll;
-	int c, i, j;
-	c = 1;
-	//Initialize the linked list 1 as an empty linked list
-	ll.head = NULL;
-	ll.size = 0;
+  printf("1: 연결 리스트에 정수를 삽입:\n");
+  printf("2: 모든 홀수를 연결 리스트 뒤로 이동:\n");
+  printf("0: 종료:\n");
 
+  while (c != 0) {
+    printf("원하는 작업을 입력하세요(1/2/0): ");
+    scanf("%d", &c);
 
-	printf("1: Insert an integer to the linked list:\n");
-	printf("2: Move all odd integers to the back of the linked list:\n");
-	printf("0: Quit:\n");
-
-	while (c != 0)
-	{
-		printf("Please input your choice(1/2/0): ");
-		scanf("%d", &c);
-
-		switch (c)
-		{
-		case 1:
-			printf("Input an integer that you want to add to the linked list: ");
-			scanf("%d", &i);
-			j = insertNode(&ll, ll.size, i);
-			printf("The resulting linked list is: ");
-			printList(&ll);
-			break;
-		case 2:
-			moveOddItemsToBack(&ll); // You need to code this function
-			printf("The resulting linked list after moving odd integers to the back of the linked list is: ");
-			printList(&ll);
-			removeAllItems(&ll);
-			break;
-		case 0:
-			removeAllItems(&ll);
-			break;
-		default:
-			printf("Choice unknown;\n");
-			break;
-		}
-	}
-	return 0;
+    switch (c) {
+      case 1:
+        printf("연결 리스트에 추가할 정수를 입력하세요: ");
+        scanf("%d", &i);
+        j = insertNode(&ll, ll.size, i);
+        printf("결과 연결 리스트: ");
+        printList(&ll);
+        break;
+      case 2:
+        moveOddItemsToBack(&ll);  // 이 함수는 직접 구현해야 합니다
+        printf("홀수를 뒤로 이동한 뒤의 연결 리스트: ");
+        printList(&ll);
+        removeAllItems(&ll);
+        break;
+      case 0:
+        removeAllItems(&ll);
+        break;
+      default:
+        printf("알 수 없는 선택입니다.\n");
+        break;
+    }
+  }
+  return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void moveOddItemsToBack(LinkedList *ll)
-{
-	/* add your code here */
+void moveOddItemsToBack(LinkedList* ll) {
+  if (ll == NULL || ll->head == NULL) return;
+
+  ListNode* curr = ll->head;
+  ListNode* next = NULL;
+  ListNode* oddHead = NULL;
+  ListNode* oddTail = NULL;
+  ListNode* evenHead = NULL;
+  ListNode* evenTail = NULL;
+
+  while (curr != NULL) {
+    next = curr->next;
+    curr->next = NULL;
+
+    if (curr->item % 2 == 0) {
+      if (evenHead == NULL) {
+        evenHead = curr;
+        evenTail = curr;
+      } else {
+        evenTail->next = curr;
+        evenTail = curr;
+      }
+    } else {
+      if (oddHead == NULL) {
+        oddHead = curr;
+        oddTail = curr;
+      } else {
+        oddTail->next = curr;
+        oddTail = curr;
+      }
+    }
+    curr = next;
+  }
+
+  if (evenHead == NULL) {
+    ll->head = oddHead;
+  } else {
+    evenTail->next = oddHead;
+    ll->head = evenHead;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-void printList(LinkedList *ll){
+void printList(LinkedList* ll) {
+  ListNode* cur;
+  if (ll == NULL) return;
+  cur = ll->head;
 
-	ListNode *cur;
-	if (ll == NULL)
-		return;
-	cur = ll->head;
-
-	if (cur == NULL)
-		printf("Empty");
-	while (cur != NULL)
-	{
-		printf("%d ", cur->item);
-		cur = cur->next;
-	}
-	printf("\n");
+  if (cur == NULL) printf("비어 있음");
+  while (cur != NULL) {
+    printf("%d ", cur->item);
+    cur = cur->next;
+  }
+  printf("\n");
 }
 
+void removeAllItems(LinkedList* ll) {
+  ListNode* cur = ll->head;
+  ListNode* tmp;
 
-void removeAllItems(LinkedList *ll)
-{
-	ListNode *cur = ll->head;
-	ListNode *tmp;
-
-	while (cur != NULL){
-		tmp = cur->next;
-		free(cur);
-		cur = tmp;
-	}
-	ll->head = NULL;
-	ll->size = 0;
+  while (cur != NULL) {
+    tmp = cur->next;
+    free(cur);
+    cur = tmp;
+  }
+  ll->head = NULL;
+  ll->size = 0;
 }
 
+ListNode* findNode(LinkedList* ll, int index) {
+  ListNode* temp;
 
-ListNode *findNode(LinkedList *ll, int index){
+  if (ll == NULL || index < 0 || index >= ll->size) return NULL;
 
-	ListNode *temp;
+  temp = ll->head;
 
-	if (ll == NULL || index < 0 || index >= ll->size)
-		return NULL;
+  if (temp == NULL || index < 0) return NULL;
 
-	temp = ll->head;
+  while (index > 0) {
+    temp = temp->next;
+    if (temp == NULL) return NULL;
+    index--;
+  }
 
-	if (temp == NULL || index < 0)
-		return NULL;
-
-	while (index > 0){
-		temp = temp->next;
-		if (temp == NULL)
-			return NULL;
-		index--;
-	}
-
-	return temp;
+  return temp;
 }
 
-int insertNode(LinkedList *ll, int index, int value){
+int insertNode(LinkedList* ll, int index, int value) {
+  ListNode *pre, *cur;
 
-	ListNode *pre, *cur;
+  if (ll == NULL || index < 0 || index > ll->size + 1) return -1;
 
-	if (ll == NULL || index < 0 || index > ll->size + 1)
-		return -1;
+  // 빈 리스트이거나 첫 번째 노드를 삽입하는 경우 head 포인터를 갱신해야 함
+  if (ll->head == NULL || index == 0) {
+    cur = ll->head;
+    ll->head = malloc(sizeof(ListNode));
+    ll->head->item = value;
+    ll->head->next = cur;
+    ll->size++;
+    return 0;
+  }
 
-	// If empty list or inserting first node, need to update head pointer
-	if (ll->head == NULL || index == 0){
-		cur = ll->head;
-		ll->head = malloc(sizeof(ListNode));
-		ll->head->item = value;
-		ll->head->next = cur;
-		ll->size++;
-		return 0;
-	}
+  // 목표 위치의 이전 노드와 해당 위치의 노드를 찾기
+  // 새 노드를 만들고 링크를 다시 연결하기
+  if ((pre = findNode(ll, index - 1)) != NULL) {
+    cur = pre->next;
+    pre->next = malloc(sizeof(ListNode));
+    pre->next->item = value;
+    pre->next->next = cur;
+    ll->size++;
+    return 0;
+  }
 
-
-	// Find the nodes before and at the target position
-	// Create a new node and reconnect the links
-	if ((pre = findNode(ll, index - 1)) != NULL){
-		cur = pre->next;
-		pre->next = malloc(sizeof(ListNode));
-		pre->next->item = value;
-		pre->next->next = cur;
-		ll->size++;
-		return 0;
-	}
-
-	return -1;
+  return -1;
 }
 
+int removeNode(LinkedList* ll, int index) {
+  ListNode *pre, *cur;
 
-int removeNode(LinkedList *ll, int index){
+  // 제거할 수 있는 가장 큰 인덱스는 size-1임
+  if (ll == NULL || index < 0 || index >= ll->size) return -1;
 
-	ListNode *pre, *cur;
+  // 첫 번째 노드를 제거하는 경우 head 포인터를 갱신해야 함
+  if (index == 0) {
+    cur = ll->head->next;
+    free(ll->head);
+    ll->head = cur;
+    ll->size--;
 
-	// Highest index we can remove is size-1
-	if (ll == NULL || index < 0 || index >= ll->size)
-		return -1;
+    return 0;
+  }
 
-	// If removing first node, need to update head pointer
-	if (index == 0){
-		cur = ll->head->next;
-		free(ll->head);
-		ll->head = cur;
-		ll->size--;
+  // 목표 위치의 이전 노드와 다음 노드를 찾기
+  // 대상 노드를 해제하고 링크를 다시 연결하기
+  if ((pre = findNode(ll, index - 1)) != NULL) {
+    if (pre->next == NULL) return -1;
 
-		return 0;
-	}
+    cur = pre->next;
+    pre->next = cur->next;
+    free(cur);
+    ll->size--;
+    return 0;
+  }
 
-	// Find the nodes before and after the target position
-	// Free the target node and reconnect the links
-	if ((pre = findNode(ll, index - 1)) != NULL){
-
-		if (pre->next == NULL)
-			return -1;
-
-		cur = pre->next;
-		pre->next = cur->next;
-		free(cur);
-		ll->size--;
-		return 0;
-	}
-
-	return -1;
+  return -1;
 }

@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
-/* CE1007/CZ1007 Data Structures
-Lab Test: Section A - Linked List Questions
-Purpose: Implementing the required functions for Question 5 */
+/* CE1007/CZ1007 자료구조
+랩 테스트: 섹션 A - 연결 리스트 문제
+목적: 문제 5에 필요한 함수를 구현하기 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -14,17 +14,17 @@ Purpose: Implementing the required functions for Question 5 */
 typedef struct _listnode{
 	int item;
 	struct _listnode *next;
-} ListNode;			// You should not change the definition of ListNode
+} ListNode;			// ListNode의 정의는 변경하면 안 됩니다
 
 typedef struct _linkedlist{
 	int size;
 	ListNode *head;
-} LinkedList;			// You should not change the definition of LinkedList
+} LinkedList;			// LinkedList의 정의는 변경하면 안 됩니다
 
 
-///////////////////////// function prototypes ////////////////////////////////////
+///////////////////////// 함수 원형 ////////////////////////////////////
 
-// You should not change the prototype of this function
+// 이 함수의 원형은 변경하면 안 됩니다
 void frontBackSplitLinkedList(LinkedList* ll, LinkedList *resultFrontList, LinkedList *resultBackList);
 
 void printList(LinkedList *ll);
@@ -42,42 +42,42 @@ int main()
 	LinkedList ll;
 	LinkedList resultFrontList, resultBackList;
 
-	//Initialize the linked list as an empty linked list
+	// 연결 리스트를 빈 연결 리스트로 초기화
 	ll.head = NULL;
 	ll.size = 0;
 
-	//Initialize the front linked list as an empty linked list
+	// 앞쪽 연결 리스트를 빈 연결 리스트로 초기화
 	resultFrontList.head = NULL;
 	resultFrontList.size = 0;
 
-	// Initialize the back linked list as an empty linked list
+	// 뒤쪽 연결 리스트를 빈 연결 리스트로 초기화
 	resultBackList.head = NULL;
 	resultBackList.size = 0;
 
-	printf("1: Insert an integer to the linked list:\n");
-	printf("2: Split the linked list into two linked lists, frontList and backList:\n");
-	printf("0: Quit:\n");
+	printf("1: 연결 리스트에 정수를 삽입:\n");
+	printf("2: 연결 리스트를 frontList와 backList 두 개로 분할:\n");
+	printf("0: 종료:\n");
 
 	while (c != 0)
 	{
-	    printf("Please input your choice(1/2/0): ");
+	    printf("원하는 작업을 입력하세요(1/2/0): ");
 		scanf("%d", &c);
 
 		switch (c)
 		{
 		case 1:
-			printf("Input an integer that you want to add to the linked list: ");
+			printf("연결 리스트에 추가할 정수를 입력하세요: ");
 			scanf("%d", &i);
 			insertNode(&ll, ll.size, i);
-			printf("The resulting linked list is: ");
+			printf("결과 연결 리스트: ");
 			printList(&ll);
 			break;
 		case 2:
-			printf("The resulting linked lists after splitting the given linked list are:\n");
-			frontBackSplitLinkedList(&ll, &resultFrontList, &resultBackList); // You need to code this function
-			printf("Front linked list: ");
+			printf("주어진 연결 리스트를 분할한 결과는 다음과 같습니다:\n");
+			frontBackSplitLinkedList(&ll, &resultFrontList, &resultBackList); // 이 함수는 직접 구현해야 합니다
+			printf("앞쪽 연결 리스트: ");
 			printList(&resultFrontList);
-			printf("Back linked list: ");
+			printf("뒤쪽 연결 리스트: ");
 			printList(&resultBackList);
 			printf("\n");
 			removeAllItems(&ll);
@@ -90,7 +90,7 @@ int main()
 			removeAllItems(&resultBackList);
 			break;
 		default:
-			printf("Choice unknown;\n");
+			printf("알 수 없는 선택입니다.\n");
 			break;
 		}
 	}
@@ -102,7 +102,7 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	/* 여기에 코드를 작성하세요 */
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +114,7 @@ void printList(LinkedList *ll){
 		return;
 	cur = ll->head;
 	if (cur == NULL)
-		printf("Empty");
+		printf("비어 있음");
 	while (cur != NULL)
 	{
 		printf("%d ", cur->item);
@@ -168,7 +168,7 @@ int insertNode(LinkedList *ll, int index, int value){
 	if (ll == NULL || index < 0 || index > ll->size + 1)
 		return -1;
 
-	// If empty list or inserting first node, need to update head pointer
+	// 빈 리스트이거나 첫 번째 노드를 삽입하는 경우 head 포인터를 갱신해야 함
 	if (ll->head == NULL || index == 0){
 		cur = ll->head;
 		ll->head = malloc(sizeof(ListNode));
@@ -178,8 +178,8 @@ int insertNode(LinkedList *ll, int index, int value){
 		return 0;
 	}
 
-	// Find the nodes before and at the target position
-	// Create a new node and reconnect the links
+	// 목표 위치의 이전 노드와 해당 위치의 노드를 찾기
+	// 새 노드를 만들고 링크를 다시 연결하기
 	if ((pre = findNode(ll, index - 1)) != NULL){
 		cur = pre->next;
 		pre->next = malloc(sizeof(ListNode));
@@ -197,11 +197,11 @@ int removeNode(LinkedList *ll, int index){
 
 	ListNode *pre, *cur;
 
-	// Highest index we can remove is size-1
+	// 제거할 수 있는 가장 큰 인덱스는 size-1임
 	if (ll == NULL || index < 0 || index >= ll->size)
 		return -1;
 
-	// If removing first node, need to update head pointer
+	// 첫 번째 노드를 제거하는 경우 head 포인터를 갱신해야 함
 	if (index == 0){
 		cur = ll->head->next;
 		free(ll->head);
@@ -211,8 +211,8 @@ int removeNode(LinkedList *ll, int index){
 		return 0;
 	}
 
-	// Find the nodes before and after the target position
-	// Free the target node and reconnect the links
+	// 목표 위치의 이전 노드와 다음 노드를 찾기
+	// 대상 노드를 해제하고 링크를 다시 연결하기
 	if ((pre = findNode(ll, index - 1)) != NULL){
 
 		if (pre->next == NULL)

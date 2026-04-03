@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
-/* CE1007/CZ1007 Data Structures
-Lab Test: Section C - Stack and Queue Questions
-Purpose: Implementing the required functions for Question 7 */
+/* CE1007/CZ1007 자료구조
+랩 테스트: 섹션 C - 스택 및 큐 문제
+목적: 문제 7에 필요한 함수를 구현하기 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -17,23 +17,23 @@ typedef struct _listnode
 {
 	int item;
 	struct _listnode *next;
-} ListNode;	// You should not change the definition of ListNode
+} ListNode;	// ListNode의 정의는 변경하면 안 됩니다
 
 typedef struct _linkedlist
 {
 	int size;
 	ListNode *head;
-} LinkedList;	// You should not change the definition of LinkedList
+} LinkedList;	// LinkedList의 정의는 변경하면 안 됩니다
 
 
 typedef struct stack
 {
 	LinkedList ll;
-} Stack; // You should not change the definition of stack
+} Stack; // stack의 정의는 변경하면 안 됩니다
 
-///////////////////////// function prototypes ////////////////////////////////////
+///////////////////////// 함수 원형 ////////////////////////////////////
 
-// You should not change the prototypes of these functions
+// 이 함수들의 원형은 변경하면 안 됩니다
 int balanced(char *expression);
 
 void push(Stack *s, int item);
@@ -59,40 +59,40 @@ int main()
 	LinkedList ll;
 	Stack s;
 
-	// Initialize the linked list as an empty linked list
+	// 연결 리스트를 빈 연결 리스트로 초기화
 	ll.head = NULL;
 	ll.size = 0;
 
-	// Initalize the stack as an empty stack
+	// 스택을 빈 스택으로 초기화
 	s.ll.head = NULL;
 	s.ll.size = 0;
 
-	printf("1: Enter a string:\n");
-	printf("2: Check whether expressions comprised of the characters ()[]{} is balanced:\n");
-	printf("0: Quit:\n");
+	printf("1: 문자열 입력:\n");
+	printf("2: ()[]{} 문자로 이루어진 식의 균형 여부를 확인:\n");
+	printf("0: 종료:\n");
 
 
 	while (c != 0)
 	{
-		printf("Please input your choice(1/2/0): ");
+		printf("원하는 작업을 입력하세요(1/2/0): ");
 		scanf("%d", &c);
 
 		switch (c)
 		{
 		case 1:
-			printf("Enter expressions without spaces to check whether it is balanced or not: ");
+			printf("균형 여부를 확인할 식을 공백 없이 입력하세요: ");
 			scanf("%s", str);
 			break;
         case 2:
             if(balanced(str))
-                printf("not balanced!\n");
+                printf("균형이 맞지 않습니다!\n");
             else
-                printf("balanced!\n");
+                printf("균형이 맞습니다!\n");
 			break;
 		case 0:
 			break;
 		default:
-			printf("Choice unknown;\n");
+			printf("알 수 없는 선택입니다.\n");
 			break;
 		}
 
@@ -104,7 +104,7 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+/* 여기에 코드를 작성하세요 */
 }
 
 ////////////////////////////////////////////////////////////
@@ -178,7 +178,7 @@ void printList(LinkedList *ll){
 
 	cur = ll->head;
 	if (cur == NULL)
-		printf("Empty");
+		printf("비어 있음");
 	while (cur != NULL)
 	{
 		printf("%d ", cur->item);
@@ -216,7 +216,7 @@ int insertNode(LinkedList *ll, int index, int value){
 	if (ll == NULL || index < 0 || index > ll->size + 1)
 		return -1;
 
-	// If empty list or inserting first node, need to update head pointer
+	// 빈 리스트이거나 첫 번째 노드를 삽입하는 경우 head 포인터를 갱신해야 함
 	if (ll->head == NULL || index == 0){
 		cur = ll->head;
 		ll->head = malloc(sizeof(ListNode));
@@ -231,8 +231,8 @@ int insertNode(LinkedList *ll, int index, int value){
 	}
 
 
-	// Find the nodes before and at the target position
-	// Create a new node and reconnect the links
+	// 목표 위치의 이전 노드와 해당 위치의 노드를 찾기
+	// 새 노드를 만들고 링크를 다시 연결하기
 	if ((pre = findNode(ll, index - 1)) != NULL){
 		cur = pre->next;
 		pre->next = malloc(sizeof(ListNode));
@@ -254,11 +254,11 @@ int removeNode(LinkedList *ll, int index){
 
 	ListNode *pre, *cur;
 
-	// Highest index we can remove is size-1
+	// 제거할 수 있는 가장 큰 인덱스는 size-1임
 	if (ll == NULL || index < 0 || index >= ll->size)
 		return -1;
 
-	// If removing first node, need to update head pointer
+	// 첫 번째 노드를 제거하는 경우 head 포인터를 갱신해야 함
 	if (index == 0){
 		cur = ll->head->next;
 		free(ll->head);
@@ -267,8 +267,8 @@ int removeNode(LinkedList *ll, int index){
 		return 0;
 	}
 
-	// Find the nodes before and after the target position
-	// Free the target node and reconnect the links
+	// 목표 위치의 이전 노드와 다음 노드를 찾기
+	// 대상 노드를 해제하고 링크를 다시 연결하기
 	if ((pre = findNode(ll, index - 1)) != NULL){
 
 		if (pre->next == NULL)

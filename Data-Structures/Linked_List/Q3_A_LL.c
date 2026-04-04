@@ -77,8 +77,9 @@ int main() {
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
 void moveOddItemsToBack(LinkedList* ll) {
+  // Todo: 홀수 노드를 리스트 뒤쪽으로 이동시키되, 기존 상대 순서는 가능한 한 유지하고 노드의 연결이 끊기지 않도록 재배치하세요.
+  // head와 size가 일관되게 유지되어야 합니다.
   if (ll == NULL || ll->head == NULL) return;
 
   ListNode* curr = ll->head;

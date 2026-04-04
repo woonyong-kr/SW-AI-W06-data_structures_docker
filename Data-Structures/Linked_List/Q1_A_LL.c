@@ -81,8 +81,9 @@ int main() {
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
 int insertSortedLL(LinkedList* ll, int item) {
+  // Todo: 정렬 상태가 유지되도록 item보다 큰 첫 노드의 앞 위치를 찾고, insertNode를 이용해 삽입한 뒤 삽입 인덱스를 반환하세요.
+  // 삽입에 실패하면 -1을 반환하세요.
   int index = 0;
   ListNode* curr = NULL;
 

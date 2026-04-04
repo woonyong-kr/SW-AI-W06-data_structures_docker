@@ -94,8 +94,9 @@ int main() {
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
 void alternateMergeLinkedList(LinkedList* ll1, LinkedList* ll2) {
+  // Todo: ll1의 각 노드 뒤에 ll2의 노드를 하나씩 번갈아 끼워 넣으세요.
+  // 연결을 바꾸기 전에 next 포인터를 미리 저장하고, 병합 후 ll2에는 사용하고 남은 노드만 남도록 head와 size를 갱신하세요.
   ListNode *curr1, *curr2, *next1, *next2;
   int count = 0;
 

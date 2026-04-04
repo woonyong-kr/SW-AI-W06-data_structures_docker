@@ -11,204 +11,195 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 
-typedef struct _listnode
-{
-	int item;
-	struct _listnode *next;
-} ListNode;			// ListNode의 정의는 변경하면 안 됩니다
+typedef struct _listnode {
+  int item;
+  struct _listnode* next;
+} ListNode;  // ListNode의 정의는 변경하면 안 됩니다
 
-typedef struct _linkedlist
-{
-	int size;
-	ListNode *head;
-} LinkedList;			// LinkedList의 정의는 변경하면 안 됩니다
-
+typedef struct _linkedlist {
+  int size;
+  ListNode* head;
+} LinkedList;  // LinkedList의 정의는 변경하면 안 됩니다
 
 //////////////////////// 함수 원형 /////////////////////////////////////
 
 // 이 함수의 원형은 변경하면 안 됩니다
-void RecursiveReverse(ListNode **ptrHead);
+void RecursiveReverse(ListNode** ptrHead);
 
-void printList(LinkedList *ll);
-void removeAllItems(LinkedList *ll);
-ListNode * findNode(LinkedList *ll, int index);
-int insertNode(LinkedList *ll, int index, int value);
-int removeNode(LinkedList *ll, int index);
+void printList(LinkedList* ll);
+void removeAllItems(LinkedList* ll);
+ListNode* findNode(LinkedList* ll, int index);
+int insertNode(LinkedList* ll, int index, int value);
+int removeNode(LinkedList* ll, int index);
 
+//////////////////////////// main()
+/////////////////////////////////////////////////
 
-//////////////////////////// main() //////////////////////////////////////////////
+int main() {
+  LinkedList ll;
+  int c, i, j;
+  c = 1;
+  // 연결 리스트 1을 빈 연결 리스트로 초기화
+  ll.head = NULL;
+  ll.size = 0;
 
-int main()
-{
-	LinkedList ll;
-	int c, i, j;
-	c = 1;
-	// 연결 리스트 1을 빈 연결 리스트로 초기화
-	ll.head = NULL;
-	ll.size = 0;
+  printf("1: 연결 리스트에 정수를 삽입:\n");
+  printf("2: 연결 리스트 뒤집기:\n");
+  printf("0: 종료:\n");
 
+  while (c != 0) {
+    printf("원하는 작업을 입력하세요(1/2/0): ");
+    scanf("%d", &c);
 
-	printf("1: 연결 리스트에 정수를 삽입:\n");
-	printf("2: 연결 리스트 뒤집기:\n");
-	printf("0: 종료:\n");
-
-	while (c != 0)
-	{
-		printf("원하는 작업을 입력하세요(1/2/0): ");
-		scanf("%d", &c);
-
-		switch (c)
-		{
-		case 1:
-			printf("연결 리스트에 추가할 정수를 입력하세요: ");
-			scanf("%d", &i);
-			j = insertNode(&ll, ll.size, i);
-			printf("결과 연결 리스트: ");
-			printList(&ll);
-			break;
-		case 2:
-			RecursiveReverse(&(ll.head)); // 이 함수는 직접 구현해야 합니다
-			printf("주어진 연결 리스트를 뒤집은 결과: ");
-			printList(&ll);
-			removeAllItems(&ll);
-			break;
-		case 0:
-			removeAllItems(&ll);
-			break;
-		default:
-			printf("알 수 없는 선택입니다.\n");
-			break;
-		}
-	}
-	return 0;
+    switch (c) {
+      case 1:
+        printf("연결 리스트에 추가할 정수를 입력하세요: ");
+        scanf("%d", &i);
+        j = insertNode(&ll, ll.size, i);
+        printf("결과 연결 리스트: ");
+        printList(&ll);
+        break;
+      case 2:
+        RecursiveReverse(&(ll.head));  // 이 함수는 직접 구현해야 합니다
+        printf("주어진 연결 리스트를 뒤집은 결과: ");
+        printList(&ll);
+        removeAllItems(&ll);
+        break;
+      case 0:
+        removeAllItems(&ll);
+        break;
+      default:
+        printf("알 수 없는 선택입니다.\n");
+        break;
+    }
+  }
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
+void RecursiveReverse(ListNode** ptrHead) {
+  // Todo: 재귀를 사용해 단일 연결 리스트를 제자리에서 뒤집으세요.
+  // 먼저 리스트가 비어 있거나 노드가 1개뿐인 경우는 그대로 반환하는 기저 조건을
+  // 처리하세요. 그 다음 현재 head의 다음 노드를 기준으로 나머지 리스트를 먼저
+  // 재귀적으로 뒤집고, 재귀 호출이 끝나면 원래 두 번째 노드의 next가 현재
+  // head를 가리키도록 연결을 반대로 바꾸세요. 현재 head의 next는 NULL로 끊어
+  // 사이클이 생기지 않게 해야 하며, 마지막에는 ptrHead가 새 head(원래 마지막
+  // 노드)를 가리키도록 갱신해야 합니다.
 
-void RecursiveReverse(ListNode **ptrHead)
-{
-	/* 여기에 코드를 작성하세요 */
+  if (ptrHead == NULL || *ptrHead == NULL || (*ptrHead)->next == NULL) return;
+
+  ListNode* first = *ptrHead;
+  ListNode* rest = first->next;
+
+  RecursiveReverse(&rest);
+
+  first->next->next = first;
+  first->next = NULL;
+  *ptrHead = rest;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void printList(LinkedList *ll){
+void printList(LinkedList* ll) {
+  ListNode* cur;
+  if (ll == NULL) return;
+  cur = ll->head;
 
-	ListNode *cur;
-	if (ll == NULL)
-		return;
-	cur = ll->head;
-
-	if (cur == NULL)
-		printf("비어 있음");
-	while (cur != NULL)
-	{
-		printf("%d ", cur->item);
-		cur = cur->next;
-	}
-	printf("\n");
+  if (cur == NULL) printf("비어 있음");
+  while (cur != NULL) {
+    printf("%d ", cur->item);
+    cur = cur->next;
+  }
+  printf("\n");
 }
 
-ListNode * findNode(LinkedList *ll, int index){
+ListNode* findNode(LinkedList* ll, int index) {
+  ListNode* temp;
 
-	ListNode *temp;
+  if (ll == NULL || index < 0 || index >= ll->size) return NULL;
 
-	if (ll == NULL || index < 0 || index >= ll->size)
-		return NULL;
+  temp = ll->head;
 
-	temp = ll->head;
+  if (temp == NULL || index < 0) return NULL;
 
-	if (temp == NULL || index < 0)
-		return NULL;
+  while (index > 0) {
+    temp = temp->next;
+    if (temp == NULL) return NULL;
+    index--;
+  }
 
-	while (index > 0){
-		temp = temp->next;
-		if (temp == NULL)
-			return NULL;
-		index--;
-	}
-
-	return temp;
+  return temp;
 }
 
-int insertNode(LinkedList *ll, int index, int value){
+int insertNode(LinkedList* ll, int index, int value) {
+  ListNode *pre, *cur;
 
-	ListNode *pre, *cur;
+  if (ll == NULL || index < 0 || index > ll->size + 1) return -1;
 
-	if (ll == NULL || index < 0 || index > ll->size + 1)
-		return -1;
+  // 빈 리스트이거나 첫 번째 노드를 삽입하는 경우 head 포인터를 갱신해야 함
+  if (ll->head == NULL || index == 0) {
+    cur = ll->head;
+    ll->head = malloc(sizeof(ListNode));
+    ll->head->item = value;
+    ll->head->next = cur;
+    ll->size++;
+    return 0;
+  }
 
-	// 빈 리스트이거나 첫 번째 노드를 삽입하는 경우 head 포인터를 갱신해야 함
-	if (ll->head == NULL || index == 0){
-		cur = ll->head;
-		ll->head = malloc(sizeof(ListNode));
-		ll->head->item = value;
-		ll->head->next = cur;
-		ll->size++;
-		return 0;
-	}
+  // 목표 위치의 이전 노드와 해당 위치의 노드를 찾기
+  // 새 노드를 만들고 링크를 다시 연결하기
+  if ((pre = findNode(ll, index - 1)) != NULL) {
+    cur = pre->next;
+    pre->next = malloc(sizeof(ListNode));
+    pre->next->item = value;
+    pre->next->next = cur;
+    ll->size++;
+    return 0;
+  }
 
-
-	// 목표 위치의 이전 노드와 해당 위치의 노드를 찾기
-	// 새 노드를 만들고 링크를 다시 연결하기
-	if ((pre = findNode(ll, index - 1)) != NULL){
-		cur = pre->next;
-		pre->next = malloc(sizeof(ListNode));
-		pre->next->item = value;
-		pre->next->next = cur;
-		ll->size++;
-		return 0;
-	}
-
-	return -1;
+  return -1;
 }
 
+int removeNode(LinkedList* ll, int index) {
+  ListNode *pre, *cur;
 
-int removeNode(LinkedList *ll, int index){
+  // 제거할 수 있는 가장 큰 인덱스는 size-1임
+  if (ll == NULL || index < 0 || index >= ll->size) return -1;
 
-	ListNode *pre, *cur;
+  // 첫 번째 노드를 제거하는 경우 head 포인터를 갱신해야 함
+  if (index == 0) {
+    cur = ll->head->next;
+    free(ll->head);
+    ll->head = cur;
+    ll->size--;
 
-	// 제거할 수 있는 가장 큰 인덱스는 size-1임
-	if (ll == NULL || index < 0 || index >= ll->size)
-		return -1;
+    return 0;
+  }
 
-	// 첫 번째 노드를 제거하는 경우 head 포인터를 갱신해야 함
-	if (index == 0){
-		cur = ll->head->next;
-		free(ll->head);
-		ll->head = cur;
-		ll->size--;
+  // 목표 위치의 이전 노드와 다음 노드를 찾기
+  // 대상 노드를 해제하고 링크를 다시 연결하기
+  if ((pre = findNode(ll, index - 1)) != NULL) {
+    if (pre->next == NULL) return -1;
 
-		return 0;
-	}
+    cur = pre->next;
+    pre->next = cur->next;
+    free(cur);
+    ll->size--;
+    return 0;
+  }
 
-	// 목표 위치의 이전 노드와 다음 노드를 찾기
-	// 대상 노드를 해제하고 링크를 다시 연결하기
-	if ((pre = findNode(ll, index - 1)) != NULL){
-
-		if (pre->next == NULL)
-			return -1;
-
-		cur = pre->next;
-		pre->next = cur->next;
-		free(cur);
-		ll->size--;
-		return 0;
-	}
-
-	return -1;
+  return -1;
 }
 
-void removeAllItems(LinkedList *ll)
-{
-	ListNode *cur = ll->head;
-	ListNode *tmp;
+void removeAllItems(LinkedList* ll) {
+  ListNode* cur = ll->head;
+  ListNode* tmp;
 
-	while (cur != NULL){
-		tmp = cur->next;
-		free(cur);
-		cur = tmp;
-	}
-	ll->head = NULL;
-	ll->size = 0;
+  while (cur != NULL) {
+    tmp = cur->next;
+    free(cur);
+    cur = tmp;
+  }
+  ll->head = NULL;
+  ll->size = 0;
 }

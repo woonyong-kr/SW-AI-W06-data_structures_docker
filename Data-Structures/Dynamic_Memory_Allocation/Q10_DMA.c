@@ -30,6 +30,28 @@ int main(void) {
 }
 
 char* joinWords(char words[][101], int n) {
-  // Todo: 필요한 전체 길이를 먼저 계산한 뒤, 그 길이만큼 메모리를 할당하고 단어와 공백을 차례로 복사하세요.
-  return NULL;
+  // Todo: 필요한 전체 길이를 먼저 계산한 뒤, 그 길이만큼 메모리를 할당하고
+  // 단어와 공백을 차례로 복사하세요.
+
+  if (words == NULL || n <= 0) return NULL;
+
+  int len = 0;
+  for (int i = 0; i < n; i++) {
+    len += strlen(words[i]);
+  }
+  len += n;
+  char* join = malloc(sizeof(char) * len);
+  int idx = 0;
+  int wordLen = 0;
+  for (int i = 0; i < n; i++) {
+    wordLen = strlen(words[i]);
+    memcpy(&join[idx], words[i], sizeof(char) * wordLen);
+    idx += wordLen;
+    if (i == n - 1) {
+      join[idx++] = '\0';
+    } else {
+      join[idx++] = ' ';
+    }
+  }
+  return join;
 }

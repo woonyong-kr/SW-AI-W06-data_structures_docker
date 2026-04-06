@@ -31,5 +31,5 @@ int main(void) {
 
 int* allocateZeroArray(int n) {
   // Todo: calloc을 사용해 n개의 int 배열을 만들고 그 주소를 반환하세요.
-  return NULL;
+  return calloc(n, sizeof(int));
 }

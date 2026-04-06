@@ -44,12 +44,32 @@ int main(void) {
 
 int** allocateMatrix(int rows, int cols) {
   // Todo: rows x cols 크기의 2차원 int 행렬을 동적으로 할당하세요.
-  return NULL;
+
+  int** result = malloc(sizeof(*result) * rows);
+  if (result == NULL) return NULL;
+  for (int i = 0; i < rows; ++i) {
+    result[i] = malloc(sizeof(*result[i]) * cols);
+  }
+
+  return result;
 }
 
 int** transposeMatrix(int** matrix, int rows, int cols) {
-  // Todo: cols x rows 크기의 새 행렬을 할당하고 matrix[j][i]를 새 위치에 복사하세요.
-  return NULL;
+  // Todo: cols x rows 크기의 새 행렬을 할당하고 matrix[j][i]를 새 위치에
+  // 복사하세요.
+  int** result = malloc(sizeof(*result) * cols);
+  if (result == NULL) return NULL;
+  for (int i = 0; i < cols; ++i) {
+    result[i] = malloc(sizeof(*result[i]) * rows);
+  }
+
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      result[j][i] = matrix[i][j];
+    }
+  }
+
+  return result;
 }
 
 void freeMatrix(int** matrix, int rows) {

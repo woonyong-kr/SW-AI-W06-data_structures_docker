@@ -35,6 +35,11 @@ int main(void) {
 }
 
 int* appendValue(int* arr, int oldSize, int value) {
-  // Todo: realloc으로 배열 크기를 oldSize+1로 늘리고 마지막 칸에 value를 저장한 뒤 새 주소를 반환하세요.
-  return arr;
+  // Todo: realloc으로 배열 크기를 oldSize+1로 늘리고 마지막 칸에 value를 저장한
+  // 뒤 새 주소를 반환하세요.
+  int* newArr = realloc(arr, sizeof(int) * (oldSize + 1));
+  if (newArr == NULL) return NULL;
+
+  newArr[oldSize] = value;
+  return newArr;
 }

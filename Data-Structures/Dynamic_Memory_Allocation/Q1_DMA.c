@@ -28,5 +28,9 @@ int main(void) {
 
 int* allocateInt(int value) {
   // Todo: int 1개를 malloc으로 할당하고 value를 저장한 뒤 그 주소를 반환하세요.
-  return NULL;
+  int* val = malloc(sizeof(*val));
+  if (val != NULL) {
+    *val = value;
+  }
+  return val;
 }

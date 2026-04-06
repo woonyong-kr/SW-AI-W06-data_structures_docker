@@ -27,6 +27,13 @@ int main(void) {
 }
 
 char* duplicateString(const char* src) {
-  // Todo: 문자열 길이만큼 메모리를 할당하고, 마지막 널 문자까지 복사한 새 문자열을 반환하세요.
-  return NULL;
+  // Todo: 문자열 길이만큼 메모리를 할당하고, 마지막 널 문자까지 복사한 새
+  // 문자열을 반환하세요.
+
+  char* copy = malloc(sizeof(src) * (strlen(src) + 1));
+  if (copy == NULL) return NULL;
+
+  memcpy(copy, src, sizeof(char) * (strlen(src) + 1));
+
+  return copy;
 }

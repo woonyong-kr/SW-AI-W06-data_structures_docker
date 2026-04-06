@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* 동적 할당 연습 문제 6
 문제: 입력 배열에서 짝수만 골라 새 동적 배열을 만드세요.
@@ -29,7 +30,24 @@ int main(void) {
 }
 
 int* filterEven(const int* arr, int n, int* outSize) {
-  // Todo: 먼저 짝수 개수를 세고, 그 크기만큼 메모리를 할당한 뒤 짝수만 복사해 반환하세요.
+  // Todo: 먼저 짝수 개수를 세고, 그 크기만큼 메모리를 할당한 뒤 짝수만 복사해
+  // 반환하세요.
   if (outSize != NULL) *outSize = 0;
-  return NULL;
+  if (arr == NULL) return NULL;
+
+  for (int i = 0; i < n; i++) {
+    if (arr[i] % 2 == 0) {
+      (*outSize)++;
+    }
+  }
+  int* result = malloc(sizeof(*arr) * (*outSize));
+
+  int idx = 0;
+  for (int i = 0; i < n; i++) {
+    if (arr[i] % 2 == 0) {
+      result[idx] = arr[i];
+      idx++;
+    }
+  }
+  return result;
 }

@@ -2,9 +2,8 @@
 #include <stdlib.h>
 
 /* 동적 할당 연습 문제 7
-문제: rows x cols 크기의 2차원 행렬을 동적으로 만들고 입력값을 저장한 뒤, 각 행의 합을 출력하세요.
-입력: rows cols, 이어서 rows*cols개 정수
-출력: 각 행의 합
+문제: rows x cols 크기의 2차원 행렬을 동적으로 만들고 입력값을 저장한 뒤, 각
+행의 합을 출력하세요. 입력: rows cols, 이어서 rows*cols개 정수 출력: 각 행의 합
 */
 
 int** allocateMatrix(int rows, int cols);
@@ -38,8 +37,17 @@ int main(void) {
 }
 
 int** allocateMatrix(int rows, int cols) {
-  // Todo: int* 행 포인터 배열과 각 행의 int 배열을 차례로 할당해 2차원 행렬을 구성하세요.
-  return NULL;
+  // Todo: int* 행 포인터 배열과 각 행의 int 배열을 차례로 할당해 2차원 행렬을
+  // 구성하세요.
+
+  int** result = malloc(sizeof(*result) * rows);
+  if (result == NULL) return NULL;
+
+  for (int i = 0; i < rows; i++) {
+    result[i] = malloc(sizeof(*result[i]) * cols);
+    if (result[i] == NULL) return NULL;
+  }
+  return result;
 }
 
 void freeMatrix(int** matrix, int rows) {

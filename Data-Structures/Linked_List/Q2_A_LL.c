@@ -96,29 +96,39 @@ int main() {
 //////////////////////////////////////////////////////////////////////////////////
 void alternateMergeLinkedList(LinkedList* ll1, LinkedList* ll2) {
   // Todo: ll1의 각 노드 뒤에 ll2의 노드를 하나씩 번갈아 끼워 넣으세요.
-  // 연결을 바꾸기 전에 next 포인터를 미리 저장하고, 병합 후 ll2에는 사용하고 남은 노드만 남도록 head와 size를 갱신하세요.
+  // 연결을 바꾸기 전에 next 포인터를 미리 저장하고, 병합 후 ll2에는 사용하고
+  // 남은 노드만 남도록 head와 size를 갱신하세요.
   ListNode *curr1, *curr2, *next1, *next2;
   int count = 0;
 
-  if (ll1 == NULL || ll2 == NULL) return;
-
-  if (ll1->head == NULL) return;
+  if (ll1 == NULL || ll2 == NULL || ll1->head == NULL) return;
 
   curr1 = ll1->head;
   curr2 = ll2->head;
+  // 시작 예시:
+  // ll1: [1|*3] -> [3|*5] -> [5|NULL]
+  // ll2: [2|*4] -> [4|*6] -> [6|NULL]
 
   while (curr1 != NULL && curr2 != NULL) {
+    // 현재 curr1 -> [1|*3], curr2 -> [2|*4] 라고 보면
+    // next1은 curr1 다음 노드 [3|*5], next2는 curr2 다음 노드 [4|*6]를
+    // 저장합니다.
     next1 = curr1->next;
     next2 = curr2->next;
 
+    // 1 뒤에 2를 끼워 넣어 [1|*2]로 연결
     curr1->next = curr2;
+    // 이어서 2 뒤에 원래 ll1의 다음 노드 3을 연결해 [2|*3]으로 만듦
     curr2->next = next1;
 
+    // 한 쌍 연결 후 일부 구조: [1|*2] -> [2|*3] -> [3|*5]
     curr1 = next1;
     curr2 = next2;
     count++;
   }
 
+  // curr2는 ll2에서 아직 사용하지 않은 첫 노드를 가리킵니다.
+  // ll2가 전부 사용됐다면 curr2는 NULL이므로 ll2는 빈 리스트가 됩니다.
   ll2->head = curr2;
   ll1->size += count;
   ll2->size -= count;

@@ -90,11 +90,16 @@ int insertSortedLL(LinkedList* ll, int item) {
   if (ll == NULL) return -1;
 
   curr = ll->head;
+  // 현재 정렬 리스트 예시: [3|*5] -> [5|*8] -> [8|NULL]
+  // item이 6이면 6보다 큰 첫 노드 8 앞에 들어가야 하므로 삽입 인덱스는 2가 됩니다.
   while (curr != NULL && curr->item < item) {
+    // curr가 [3|*5], [5|*8]처럼 item보다 작은 노드를 가리키는 동안 앞으로 이동
     curr = curr->next;
     index++;
   }
 
+  // 반복이 끝나면 curr는 item보다 크거나 같은 첫 노드, 또는 NULL입니다.
+  // 예: curr -> [8|NULL], index = 2 이면 [5|*6] 뒤 위치에 새 노드를 넣게 됩니다.
   if (insertNode(ll, index, item) == 0) return index;
 
   return -1;

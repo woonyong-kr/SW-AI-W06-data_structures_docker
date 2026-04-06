@@ -88,8 +88,11 @@ int moveMaxToFront(ListNode** ptrHead) {
   ListNode* prev = NULL;
   ListNode* maxNode = *ptrHead;
   ListNode* maxPrev = NULL;
+  // 시작 예시: [1|*5] -> [5|*3] -> [3|NULL]
+  // maxNode는 현재 가장 큰 값을 가진 노드, maxPrev는 그 이전 노드를 가리킵니다.
 
   while (curr != NULL) {
+    // curr가 [1|*5], [5|*3], [3|NULL] 순서로 이동하면서 최댓값을 찾습니다.
     if (maxNode->item < curr->item) {
       maxNode = curr;
       maxPrev = prev;
@@ -98,10 +101,14 @@ int moveMaxToFront(ListNode** ptrHead) {
     curr = curr->next;
   }
 
+  // 탐색 후 예시: maxNode -> [5|*3], maxPrev -> [1|*5]
   if ((*ptrHead) == maxNode) return -1;
 
+  // 먼저 maxNode(5)를 원래 자리에서 분리해 [1|*3] -> [3|NULL]로 만듭니다.
   maxPrev->next = maxNode->next;
+  // 그 다음 5의 next가 기존 head(1)를 가리키게 해 [5|*1]로 만듭니다.
   maxNode->next = *ptrHead;
+  // 마지막으로 head를 5로 바꿔 [5|*1] -> [1|*3] -> [3|NULL]을 완성합니다.
   *ptrHead = maxNode;
 
   return 0;

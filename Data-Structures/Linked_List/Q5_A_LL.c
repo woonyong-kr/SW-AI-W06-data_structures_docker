@@ -107,14 +107,21 @@ void frontBackSplitLinkedList(LinkedList* ll, LinkedList* resultFrontList,
   int count = 0;
   ListNode* curr = ll->head;
   ListNode* next = NULL;
+  // 원본 예시: [1|*2] -> [2|*3] -> [3|*4] -> [4|*5] -> [5|NULL]
+  // size가 5이면 frontSize는 3이므로 앞쪽 리스트는 1,2,3을 가져갑니다.
 
   while (curr != NULL) {
+    // count가 0,1,2일 때는 frontList에 추가
+    // 결과 예시: front -> [1|*2] -> [2|*3] -> [3|NULL]
     if (count < frontSize) {
       insertNode(resultFrontList, resultFrontList->size, curr->item);
     } else {
+      // count가 3 이상이면 backList에 추가
+      // 결과 예시: back -> [4|*5] -> [5|NULL]
       insertNode(resultBackList, resultBackList->size, curr->item);
     }
-    curr = curr->next;
+    next = curr->next;
+    curr = next;
     count++;
   }
 }

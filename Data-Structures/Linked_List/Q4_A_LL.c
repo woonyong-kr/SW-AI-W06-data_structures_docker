@@ -90,10 +90,13 @@ void moveEvenItemsToBack(LinkedList* ll) {
   ListNode* evenTail = NULL;
 
   while (curr != NULL) {
+    // 현재 리스트 예시: [1|*2] -> [2|*3] -> [3|*4] -> [4|NULL]
     next = curr->next;
     curr->next = NULL;
 
     if (curr->item % 2 == 0) {
+      // 짝수 노드는 even 리스트 뒤에 붙입니다.
+      // 예: evenHead -> [2|*4], evenTail -> [4|NULL]
       if (evenHead == NULL) {
         evenHead = curr;
         evenTail = curr;
@@ -102,6 +105,8 @@ void moveEvenItemsToBack(LinkedList* ll) {
         evenTail = curr;
       }
     } else {
+      // 홀수 노드는 odd 리스트 뒤에 붙입니다.
+      // 예: oddHead -> [1|*3], oddTail -> [3|NULL]
       if (oddHead == NULL) {
         oddHead = curr;
         oddTail = curr;
@@ -112,6 +117,9 @@ void moveEvenItemsToBack(LinkedList* ll) {
     }
     curr = next;
   }
+  // 분리 후 예시:
+  // oddHead  -> [1|*3] -> [3|NULL]
+  // evenHead -> [2|*4] -> [4|NULL]
   if (oddHead == NULL) {
     ll->head = evenHead;
   } else {

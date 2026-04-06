@@ -87,14 +87,30 @@ void RecursiveReverse(ListNode** ptrHead) {
   // 노드)를 가리키도록 갱신해야 합니다.
 
   if (ptrHead == NULL || *ptrHead == NULL || (*ptrHead)->next == NULL) return;
+  // 현재 리스트: [1|*2] -> [2|*3] -> [3|*4] -> [4|*5] -> [5|NULL]
 
-  ListNode* first = *ptrHead;
-  ListNode* rest = first->next;
+  // first는 첫 번째 노드를 가리킴
+  ListNode* first = *ptrHead;  // first -> [1|*2]
 
+  // rest는 first 다음 노드부터 시작하는 부분 리스트를 가리킴
+  ListNode* rest = first->next;  // rest -> [2|*3] -> [3|*4] -> [4|*5] -> [5|NULL]
+
+  // rest가 가리키는 부분 리스트를 먼저 재귀적으로 뒤집음
   RecursiveReverse(&rest);
 
+  // 재귀 호출 후:
+  // rest  -> [5|*4] -> [4|*3] -> [3|*2] -> [2|NULL]
+  // first -> [1|*2]
+
+  // 현재 2의 next가 first(1)를 가리키도록 연결
   first->next->next = first;
+  // 연결 후 일부 구조: [2|*1] -> [1|*2]
+
+  // first의 next를 NULL로 바꿔 기존 연결을 끊고 사이클을 방지
   first->next = NULL;
+  // 연결 후 일부 구조: [2|*1] -> [1|NULL]
+
+  // 뒤집힌 부분 리스트의 head를 전체 리스트의 새 head로 갱신
   *ptrHead = rest;
 }
 

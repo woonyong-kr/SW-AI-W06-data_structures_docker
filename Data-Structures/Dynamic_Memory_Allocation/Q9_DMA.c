@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* 동적 할당 연습 문제 9
 문제: 입력 단어들을 각각 동적으로 복제해 문자열 배열에 저장하세요.
@@ -34,8 +35,18 @@ int main(void) {
 }
 
 char** cloneWords(char words[][101], int n) {
-  // Todo: char* 포인터 배열을 할당한 뒤, 각 단어를 개별적으로 동적 복제해 저장하세요.
-  return NULL;
+  // Todo: char* 포인터 배열을 할당한 뒤, 각 단어를 개별적으로 동적 복제해
+  // 저장하세요.
+  if (words == NULL || n <= 0) return NULL;
+
+  char** clone = malloc(sizeof(char*) * n);
+  int len = 0;
+  for (int i = 0; i < n; i++) {
+    len = sizeof(char) * (strlen(words[i]) + 1);
+    clone[i] = malloc(len);
+    memcpy(clone[i], words[i], len);
+  }
+  return clone;
 }
 
 void freeWords(char** words, int n) {

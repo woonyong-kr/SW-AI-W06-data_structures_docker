@@ -33,5 +33,8 @@ int main(void) {
 
 int* cloneArray(const int* src, int n) {
   // Todo: malloc으로 새 배열을 만들고 src의 값을 모두 복사해 반환하세요.
-  return NULL;
+  int* copy = malloc(sizeof(int) * n);
+  memcpy(copy, src, sizeof(int) * n);
+
+  return copy;
 }

@@ -102,7 +102,16 @@ int countOneChildNodes(BTNode *node)
 {
     // Todo: 각 노드를 방문하며 왼쪽/오른쪽 자식 중 정확히 하나만 있는 경우를 세세요.
     // 왼쪽과 오른쪽 서브트리 결과를 재귀적으로 합산해 반환하세요.
-    /* 여기에 코드를 작성하세요 */
+    int count = 0;
+
+    if (node == NULL) return 0;
+
+    if ((node->left == NULL) != (node->right == NULL))
+        count = 1;
+
+    return count +
+           countOneChildNodes(node->left) +
+           countOneChildNodes(node->right);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -230,4 +239,3 @@ void removeAll(BTNode **node)
         *node = NULL;
     }
 }
-

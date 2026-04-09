@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* 동적 할당 연습 문제 4
 문제: 문자열을 동적으로 복제하세요.
@@ -29,11 +30,16 @@ int main(void) {
 char* duplicateString(const char* src) {
   // Todo: 문자열 길이만큼 메모리를 할당하고, 마지막 널 문자까지 복사한 새
   // 문자열을 반환하세요.
+  size_t length;
+  char* copy;
 
-  char* copy = malloc(sizeof(src) * (strlen(src) + 1));
+  if (src == NULL) return NULL;
+
+  length = strlen(src);
+  copy = malloc(length + 1);
   if (copy == NULL) return NULL;
 
-  memcpy(copy, src, sizeof(char) * (strlen(src) + 1));
+  memcpy(copy, src, length + 1);
 
   return copy;
 }

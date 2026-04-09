@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* 동적 할당 연습 문제 10
 문제: 입력 단어들을 사이에 공백 하나씩 넣어 새 동적 문자열로 이어 붙이세요.
@@ -32,23 +33,27 @@ int main(void) {
 char* joinWords(char words[][101], int n) {
   // Todo: 필요한 전체 길이를 먼저 계산한 뒤, 그 길이만큼 메모리를 할당하고
   // 단어와 공백을 차례로 복사하세요.
+  int i;
+  int len = 0;
+  int idx = 0;
+  char* join;
 
   if (words == NULL || n <= 0) return NULL;
 
-  int len = 0;
-  for (int i = 0; i < n; i++) {
+  for (i = 0; i < n; i++) {
     len += strlen(words[i]);
   }
-  len += n;
-  char* join = malloc(sizeof(char) * len);
-  int idx = 0;
-  int wordLen = 0;
-  for (int i = 0; i < n; i++) {
-    wordLen = strlen(words[i]);
+  len += n;  // 공백 n-1개와 널 문자 1개
+
+  join = malloc(sizeof(char) * len);
+  if (join == NULL) return NULL;
+
+  for (i = 0; i < n; i++) {
+    int wordLen = strlen(words[i]);
     memcpy(&join[idx], words[i], sizeof(char) * wordLen);
     idx += wordLen;
     if (i == n - 1) {
-      join[idx++] = '\0';
+      join[idx] = '\0';
     } else {
       join[idx++] = ' ';
     }

@@ -41,9 +41,9 @@ void reverseArray(int* arr, int n) {
   // arr + n - 1 은 마지막 원소 주소, 즉 &arr[n - 1] 입니다.
   // 예: arr = [1, 2, 3, 4, 5] 이고 n = 5면 right는 5를 가리킵니다.
   // left++, right-- 는 바이트 1칸이 아니라 int 원소 1칸씩 이동합니다.
-  int* temp;
+  int temp;
 
-  while (left != right) {
+  while (left < right) {
     temp = *left;
     *left = *right;
     *right = temp;

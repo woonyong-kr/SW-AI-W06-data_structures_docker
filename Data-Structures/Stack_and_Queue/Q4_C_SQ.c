@@ -113,7 +113,18 @@ void reverse(Queue *q)
 {
 // Todo: 보조 스택을 사용해 큐의 모든 원소 순서를 뒤집으세요.
 // dequeue와 push/pop을 적절히 조합해 최종 큐가 역순이 되도록 만드세요.
-/* 여기에 코드를 작성하세요 */
+    Stack s;
+    s.ll.head = NULL;
+    s.ll.tail = NULL;
+    s.ll.size = 0;
+
+    while (!isEmptyQueue(q)) {
+        push(&s, dequeue(q));
+    }
+
+    while (!isEmptyStack(&s)) {
+        enqueue(q, pop(&s));
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

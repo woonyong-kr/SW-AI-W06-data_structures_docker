@@ -117,7 +117,11 @@ int identical(BTNode *tree1, BTNode *tree2)
 {
    // Todo: 두 트리를 재귀적으로 비교해 구조가 같은지 판별하세요.
    // 두 노드가 모두 NULL이면 같고, 하나만 NULL이면 다르며, 각 자식 서브트리 구조가 모두 같아야 1을 반환하세요.
-   /* 여기에 코드를 작성하세요 */
+   if (tree1 == NULL && tree2 == NULL) return 1;
+   if (tree1 == NULL || tree2 == NULL) return 0;
+
+   return identical(tree1->left, tree2->left) &&
+          identical(tree1->right, tree2->right);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

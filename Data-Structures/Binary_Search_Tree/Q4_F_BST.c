@@ -92,7 +92,34 @@ void postOrderIterativeS1(BSTNode *root)
 {
 	 // Todo: 문제에서 허용한 스택 기반 방법으로 반복 후위 순회를 구현하세요.
 	 // 방문 순서가 left-right-root가 되도록 스택과 이전 방문 정보 또는 보조 스택을 적절히 사용하세요.
-	 /* 여기에 코드를 작성하세요 */
+	Stack stack;
+	BSTNode *current = root;
+	BSTNode *lastVisited = NULL;
+
+	stack.top = NULL;
+
+	while (current != NULL || !isEmpty(&stack))
+	{
+		if (current != NULL)
+		{
+			push(&stack, current);
+			current = current->left;
+		}
+		else
+		{
+			BSTNode *peekNode = peek(&stack);
+
+			if (peekNode->right != NULL && lastVisited != peekNode->right)
+			{
+				current = peekNode->right;
+			}
+			else
+			{
+				printf("%d ", peekNode->item);
+				lastVisited = pop(&stack);
+			}
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

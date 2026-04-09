@@ -72,7 +72,7 @@ int main()
 
 	while (c != 0)
 	{
-		printf("원하는 작업을 입력하세요(1/2/0): ");
+		printf("원하는 작업을 입력하세요(1/3/0): ");
 		scanf("%d", &c);
 
 		switch (c)
@@ -85,6 +85,7 @@ int main()
 			printList(&(s.ll));
 			break;
 		case 2:
+		case 3:
 		    printf("해당 값이 나올 때까지 제거할 기준 정수를 스택에서 입력하세요: ");
 			scanf("%d", &i);
 			removeUntil(&s,i); // 이 함수는 직접 구현해야 합니다
@@ -112,7 +113,12 @@ void removeUntil(Stack *s, int value)
 {
 // Todo: 스택 top에서부터 value를 만날 때까지 원소를 제거하세요.
 // value를 만난 뒤의 처리 규칙을 문제 요구에 맞게 적용하고, 최종 스택 상태를 올바르게 유지하세요.
-/* 여기에 코드를 작성하세요 */
+    if (s == NULL)
+        return;
+
+    while (!isEmptyStack(s) && peek(s) != value) {
+        pop(s);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////

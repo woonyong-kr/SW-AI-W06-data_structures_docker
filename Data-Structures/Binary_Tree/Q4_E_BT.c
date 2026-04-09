@@ -104,7 +104,14 @@ int sumOfOddNodes(BTNode *node)
 {
     // Todo: 트리를 순회하며 홀수 값을 가진 노드의 item만 모두 더해 반환하세요.
     // 현재 노드 값과 좌우 서브트리의 합을 재귀적으로 결합하면 됩니다.
-    /* 여기에 코드를 작성하세요 */
+    int sum = 0;
+
+    if (node == NULL) return 0;
+
+    if (node->item % 2 != 0)
+        sum = node->item;
+
+    return sum + sumOfOddNodes(node->left) + sumOfOddNodes(node->right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -232,4 +239,3 @@ void removeAll(BTNode **node)
         *node = NULL;
     }
 }
-

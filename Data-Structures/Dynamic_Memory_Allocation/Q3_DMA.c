@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* 동적 할당 연습 문제 3
 문제: 입력 배열을 힙 메모리에 복제하세요.
@@ -33,7 +34,11 @@ int main(void) {
 
 int* cloneArray(const int* src, int n) {
   // Todo: malloc으로 새 배열을 만들고 src의 값을 모두 복사해 반환하세요.
+  if (src == NULL || n <= 0) return NULL;
+
   int* copy = malloc(sizeof(int) * n);
+  if (copy == NULL) return NULL;
+
   memcpy(copy, src, sizeof(int) * n);
 
   return copy;

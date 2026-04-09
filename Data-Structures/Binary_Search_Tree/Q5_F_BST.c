@@ -91,7 +91,31 @@ void postOrderIterativeS2(BSTNode *root)
 {
 	 // Todo: 스택 기반 반복 후위 순회를 구현하세요.
 	 // 문제에서 요구하는 방법에 맞춰 모든 노드를 left-right-root 순서로 출력하세요.
-	 /* 여기에 코드를 작성하세요 */
+	Stack s1, s2;
+	BSTNode *current;
+
+	s1.top = NULL;
+	s2.top = NULL;
+
+	if (root == NULL) return;
+
+	push(&s1, root);
+	while (!isEmpty(&s1))
+	{
+		current = pop(&s1);
+		push(&s2, current);
+
+		if (current->left != NULL)
+			push(&s1, current->left);
+		if (current->right != NULL)
+			push(&s1, current->right);
+	}
+
+	while (!isEmpty(&s2))
+	{
+		current = pop(&s2);
+		printf("%d ", current->item);
+	}
 }
 
 /* 이 함수는 이진 탐색 트리와 키를 받아 해당 키를 삭제하고 새로운 루트를 반환합니다. 재귀 함수로 작성하세요. */
@@ -99,7 +123,43 @@ BSTNode* removeNodeFromTree(BSTNode *root, int value)
 {
 	// Todo: BST 삭제 규칙을 재귀적으로 구현하세요.
 	// 삭제 대상이 리프인지, 자식이 하나인지, 자식이 둘인지 구분하고, 둘인 경우 중위 후속자 또는 전임자를 사용해 트리를 다시 연결하세요.
-	/* 여기에 코드를 작성하세요 */
+	BSTNode *successor;
+
+	if (root == NULL)
+		return NULL;
+
+	if (value < root->item)
+	{
+		root->left = removeNodeFromTree(root->left, value);
+	}
+	else if (value > root->item)
+	{
+		root->right = removeNodeFromTree(root->right, value);
+	}
+	else
+	{
+		if (root->left == NULL)
+		{
+			BSTNode *rightChild = root->right;
+			free(root);
+			return rightChild;
+		}
+		if (root->right == NULL)
+		{
+			BSTNode *leftChild = root->left;
+			free(root);
+			return leftChild;
+		}
+
+		successor = root->right;
+		while (successor->left != NULL)
+			successor = successor->left;
+
+		root->item = successor->item;
+		root->right = removeNodeFromTree(root->right, successor->item);
+	}
+
+	return root;
 }
 ///////////////////////////////////////////////////////////////////////////////
 

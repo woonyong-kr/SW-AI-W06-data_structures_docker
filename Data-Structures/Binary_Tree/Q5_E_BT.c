@@ -105,7 +105,16 @@ int main()
 void mirrorTree(BTNode *node)
 {
 	// Todo: 각 노드에서 left와 right 자식을 서로 바꾸고, 좌우 서브트리에도 같은 작업을 재귀적으로 적용해 전체 트리를 대칭 구조로 바꾸세요.
-	/* 여기에 코드를 작성하세요 */
+	BTNode *temp;
+
+	if (node == NULL) return;
+
+	temp = node->left;
+	node->left = node->right;
+	node->right = temp;
+
+	mirrorTree(node->left);
+	mirrorTree(node->right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -233,4 +242,3 @@ void removeAll(BTNode **node)
         *node = NULL;
     }
 }
-

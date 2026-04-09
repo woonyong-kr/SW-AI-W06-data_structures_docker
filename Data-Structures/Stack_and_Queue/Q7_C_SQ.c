@@ -106,7 +106,46 @@ int balanced(char *expression)
 {
 // Todo: 문자열을 왼쪽부터 읽으며 여는 괄호는 스택에 push하고, 닫는 괄호는 top과 짝이 맞는지 검사하세요.
 // 중간에 불일치가 있거나 마지막에 스택이 비어 있지 않으면 불균형으로 처리하세요.
-/* 여기에 코드를 작성하세요 */
+    Stack s;
+    int i = 0;
+
+    s.ll.head = NULL;
+    s.ll.size = 0;
+
+    while (expression[i] != '\0')
+    {
+        char ch = expression[i];
+
+        if (ch == '(' || ch == '[' || ch == '{')
+        {
+            push(&s, ch);
+        }
+        else if (ch == ')' || ch == ']' || ch == '}')
+        {
+            int top;
+
+            if (isEmptyStack(&s))
+                return 1;
+
+            top = pop(&s);
+            if ((ch == ')' && top != '(') ||
+                (ch == ']' && top != '[') ||
+                (ch == '}' && top != '{'))
+            {
+                removeAllItemsFromStack(&s);
+                return 1;
+            }
+        }
+        i++;
+    }
+
+    if (!isEmptyStack(&s))
+    {
+        removeAllItemsFromStack(&s);
+        return 1;
+    }
+
+    return 0;
 }
 
 ////////////////////////////////////////////////////////////

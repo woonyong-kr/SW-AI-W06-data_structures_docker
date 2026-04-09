@@ -103,9 +103,26 @@ int smallestValue(BTNode *node)
 {
 	// Todo: 트리 전체를 순회해 가장 작은 item 값을 찾아 반환하세요.
 	// 빈 트리 예외를 고려하고, 현재 값과 좌우 서브트리 최솟값을 비교하세요.
-	/* 여기에 코드를 작성하세요 */
-}
+	int minValue;
 
+	if (node == NULL) return 0;
+
+	minValue = node->item;
+	if (node->left != NULL)
+	{
+		int leftMin = smallestValue(node->left);
+		if (leftMin < minValue)
+			minValue = leftMin;
+	}
+	if (node->right != NULL)
+	{
+		int rightMin = smallestValue(node->right);
+		if (rightMin < minValue)
+			minValue = rightMin;
+	}
+
+	return minValue;
+}
 //////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item)

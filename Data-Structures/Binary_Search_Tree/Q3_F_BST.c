@@ -92,7 +92,22 @@ void preOrderIterative(BSTNode *root)
 {
 	 // Todo: 스택을 사용한 반복 전위 순회를 구현하세요.
 	 // 노드를 pop할 때 출력하고, 오른쪽 자식 먼저 push한 뒤 왼쪽 자식을 push하면 preorder 순서를 유지할 수 있습니다.
-	 /* 여기에 코드를 작성하세요 */
+	Stack stack;
+	BSTNode *current;
+
+	stack.top = NULL;
+	if (root == NULL) return;
+
+	push(&stack, root);
+	while (!isEmpty(&stack))
+	{
+		current = pop(&stack);
+		printf("%d ", current->item);
+		if (current->right != NULL)
+			push(&stack, current->right);
+		if (current->left != NULL)
+			push(&stack, current->left);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

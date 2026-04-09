@@ -110,7 +110,14 @@ void recursiveReverse(Queue *q)
 {
 // Todo: 재귀적으로 큐를 뒤집으세요.
 // 큐가 빌 때까지 dequeue한 뒤 재귀 호출 후 enqueue하여 순서를 반전시키면 됩니다.
-/* 여기에 코드를 작성하세요 */
+    int item;
+
+    if (q == NULL || isEmptyQueue(q))
+        return;
+
+    item = dequeue(q);
+    recursiveReverse(q);
+    enqueue(q, item);
 }
 
 //////////////////////////////////////////////////////////////////

@@ -94,8 +94,21 @@ void levelOrderTraversal(BSTNode* root)
 {
     // Todo: 큐를 사용해 BST를 레벨 순서로 순회하세요.
     // root부터 시작해 dequeue한 노드를 출력하고, 왼쪽과 오른쪽 자식이 있으면 순서대로 enqueue하세요.
+	QueueNode *head = NULL;
+	QueueNode *tail = NULL;
+	BSTNode *current;
 
-    /* 여기에 코드를 작성하세요 */
+	if (root == NULL) return;
+
+	enqueue(&head, &tail, root);
+	while (!isEmpty(head)) {
+		current = dequeue(&head, &tail);
+		printf("%d ", current->item);
+		if (current->left != NULL)
+			enqueue(&head, &tail, current->left);
+		if (current->right != NULL)
+			enqueue(&head, &tail, current->right);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

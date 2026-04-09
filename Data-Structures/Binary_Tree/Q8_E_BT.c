@@ -36,6 +36,7 @@ typedef struct _stack
 
 // 이 함수들의 원형은 변경하면 안 됩니다
 int hasGreatGrandchild(BTNode *node);
+static int treeHeight(BTNode *node);
 
 BTNode *createBTNode(int item);
 
@@ -103,7 +104,30 @@ int hasGreatGrandchild(BTNode *node)
 {
 	// Todo: 현재 노드가 증손자를 하나 이상 가지는지 판별하세요.
 	// 문제 요구에 따라 조건을 만족하는 노드 값을 출력하거나, 부모 호출이 활용할 수 있는 형태로 결과를 반환하세요.
-	/* 여기에 코드를 작성하세요 */
+	int height;
+
+	if (node == NULL) return 0;
+
+	hasGreatGrandchild(node->left);
+	height = treeHeight(node);
+	if (height >= 4)
+		printf("%d ", node->item);
+	hasGreatGrandchild(node->right);
+
+	return height >= 4;
+}
+
+static int treeHeight(BTNode *node)
+{
+	int leftHeight;
+	int rightHeight;
+
+	if (node == NULL) return 0;
+
+	leftHeight = treeHeight(node->left);
+	rightHeight = treeHeight(node->right);
+
+	return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -231,4 +255,3 @@ void removeAll(BTNode **node)
         *node = NULL;
     }
 }
-
